@@ -48,7 +48,7 @@ def gen_frames():
 def index():
     meme = get_meme_by_expression(current_expression)
     return render_template(
-        "index.html",
+        "https://github.com/adityagupta-dev07/FACE_EXPRESSION_DETECTION/blob/main/templates/index.html",
         expression=current_expression,
         meme_name=meme["meme_name"],
         caption=meme["default_caption"],
@@ -72,6 +72,7 @@ def meme():
 
 if __name__ == "__main__":
     app.run(debug=False, threaded=True)
+
 
 
 
