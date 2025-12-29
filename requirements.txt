@@ -1,5 +1,0 @@
-flask
-opencv-python-headless
-tensorflow==2.10.0
-numpy<2
-gunicorn
