@@ -5,6 +5,7 @@ from detector import predict_emotion
 app = Flask(__name__)
 
 camera = cv2.VideoCapture(0)
+
 latest_emotion = "neutral"
 
 def gen_frames():
@@ -35,3 +36,4 @@ def emotion():
 
 if __name__ == "__main__":
     app.run(debug=False, threaded=True)
+
