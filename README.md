@@ -90,8 +90,6 @@ Before deploying on your laptop, ensure:
 - ✅ Windows / Linux / macOS  
 
 Check Python version:
-
-```bash
 python --version
 ---
 🚀 Deploy on Your Own Laptop (Step-by-Step)
@@ -210,13 +208,13 @@ This project is open-source and distributed under the MIT License.
 ---
 
 👥 About the Authors
-Name	Role	GitHub
-Aditya Gupta	Project Creator & ML Developer	https://github.com/adityagupta-dev07
+Aditya Gupta---	Project Creator & ML Developer	https://github.com/adityagupta-dev007---
 
-Ayush kumar trevedi	Co-Developer & Testing	https://github.com/ayush-911
+Ayush kumar trivedi---	Co-Developer & Testing	https://github.com/ayush-911
 
-Aditya Pratap Singh	UI/UX Designer & Frontend Integration	(Add your GitHub)
-Aryan Gupta	Documentation & Testing	(Add your GitHub)
+Aditya Pratap Singh---	UI/UX Designer & Frontend Integration	https://github.com/singhadityapratap802-coder
+
+Aryan Gupta---	Documentation & Testing	https://github.com/aryan1gupta-ux
 ---
 ⭐ Support & Feedback
 
