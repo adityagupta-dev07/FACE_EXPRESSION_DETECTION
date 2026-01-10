@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mood Booster</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Consolas, monospace;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #003c37, #000);
+  color: #00ffcc;
+}
+
+/* ===== COMMON ===== */
+button {
+  cursor: pointer;
+  border: none;
+}
+
+/* ===== WELCOME ===== */
+#welcome {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, #002f2a, #000);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+  text-align: center;
+}
+
+#welcome h1 {
+  font-size: 3rem;
+}
+
+#welcome p {
+  margin: 15px 0 30px;
+  opacity: 0.8;
+}
+
+#welcome button {
+  padding: 14px 40px;
+  background: #00ffcc;
+  font-size: 1.1rem;
+  box-shadow: 0 0 25px #00ffcc;
+}
+
+/* ===== INTRO ===== */
+#intro {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #003c37, #000);
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 15;
+  text-align: center;
+}
+
+.intro-title {
+  font-size: clamp(1.8rem, 4vw, 2.3rem);
+  margin-bottom: 22px;
+  letter-spacing: 2px;
+  text-shadow: 0 0 18px #00ffcc;
+}
+
+.intro-box {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: min(320px, 85vw);
+}
+
+/* INPUT */
+#intro input {
+  padding: 14px 16px;
+  background: rgba(0,0,0,0.85);
+  border: 2px solid rgba(0,255,204,0.6);
+  border-radius: 10px;
+  color: #00ffcc;
+  font-size: 1.05rem;
+  text-align: center;
+  outline: none;
+  animation: pulse 2s infinite;
+  transition: 0.25s ease;
+}
+
+#intro input::placeholder {
+  color: rgba(0,255,204,0.55);
+}
+
+#intro input:focus {
+  border-color: #00ffcc;
+  box-shadow: 0 0 20px rgba(0,255,204,0.8);
+}
+
+/* BUTTON */
+#intro button {
+  padding: 14px;
+  background: linear-gradient(135deg, #00ffcc, #00c9a7);
+  border-radius: 10px;
+  font-size: 1.05rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: black;
+  box-shadow: 0 0 22px rgba(0,255,204,0.6);
+  transition: 0.25s ease;
+}
+
+#intro button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 32px rgba(0,255,204,0.9);
+}
+
+/* INPUT PULSE */
+@keyframes pulse {
+  0% { box-shadow: 0 0 10px rgba(0,255,204,0.4); }
+  50% { box-shadow: 0 0 22px rgba(0,255,204,0.9); }
+  100% { box-shadow: 0 0 10px rgba(0,255,204,0.4); }
+}
+
+/* ===== HEADER ===== */
+.header {
+  text-align: center;
+  padding: 15px;
+  font-size: 1.8rem;
+  border-bottom: 1px solid rgba(0,255,204,0.3);
+}
+
+/* HEADER REVEAL ANIMATION */
+.reveal {
+  animation: reveal 0.6s ease forwards;
+}
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== MAIN ===== */
+.main {
+  display: none;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: rgba(0,0,0,0.6);
+  border-radius: 20px;
+  padding: 16px;
+  border: 1px solid rgba(0,255,204,0.4);
+}
+
+/* CAMERA */
+.camera-card {
+  flex: 1 1 360px;
+  max-width: 560px;
+}
+.camera-card img {
+  width: 100%;
+  border-radius: 14px;
+}
+
+/* MEME */
+.meme-card {
+  flex: 1 1 320px;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.meme-card img {
+  width: 100%;
+  max-height: 280px;
+  object-fit: contain;
+  border-radius: 14px;
+}
+
+/* ===== EMOTION PANEL ===== */
+#emotionPanel {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.emotions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.emotion-btn {
+  padding: 10px 16px;
+  background: rgba(0,255,204,0.15);
+  border: 1px solid rgba(0,255,204,0.4);
+  color: #00ffcc;
+  border-radius: 20px;
+}
+
+.emotion-btn.active {
+  background: #00ffcc;
+  color: black;
+  box-shadow: 0 0 12px #00ffcc;
+}
+
+#autoBtn {
+  margin-top: 15px;
+  padding: 10px 30px;
+  background: #00ffcc;
+  color: black;
+  border-radius: 25px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ===== SOUND BTN ===== */
+#soundBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 18px;
+  background: #00ffcc;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<!-- WELCOME -->
+<div id="welcome">
+  <h1>Welcome, Gentleman</h1>
+  <p>Control. Awareness. Precision.</p>
+  <button onclick="goToIntro()">Proceed</button>
+</div>
+
+<!-- INTRO -->
+<div id="intro">
+  <h2 class="intro-title">Enter your name</h2>
+  <div class="intro-box">
+    <input id="username" placeholder="your_name">
+    <button onclick="startApp()">ENTER</button>
+  </div>
+</div>
+
+<div class="header" id="headerText"></div>
+
+<div class="main" id="app">
+
+  <div class="card camera-card">
+    <img src="/video_feed">
+    <p style="text-align:center;margin-top:10px;">
+      Emotion: <span id="label">neutral</span>
+    </p>
+  </div>
+
+  <div class="card meme-card">
+    <h3 id="memeTitle">kuch khaas nahi 😌</h3>
+    <img id="memeImg" src="/static/memes/neutral.gif">
+    <p id="memeFooter">jeevan waste hai mera 😌</p>
+  </div>
+
+  <div id="emotionPanel">
+    <div class="emotions" id="emotionButtons"></div>
+    <button id="autoBtn" onclick="enableAuto()">AUTO (Camera)</button>
+  </div>
+
+</div>
+
+<button id="soundBtn">🔊 Enable Sound</button>
+
+<!-- AUDIO -->
+<audio id="neutral" src="/static/sounds/neutral.mp3"></audio>
+<audio id="happy" src="/static/sounds/happy.mp3"></audio>
+<audio id="sad" src="/static/sounds/sad.mp3"></audio>
+<audio id="angry" src="/static/sounds/angry.mp3"></audio>
+<audio id="surprise" src="/static/sounds/surprise.mp3"></audio>
+<audio id="fear" src="/static/sounds/fear.mp3"></audio>
+<audio id="thinking" src="/static/sounds/thinking.mp3"></audio>
+<audio id="idea" src="/static/sounds/idea.mp3"></audio>
+
+<script>
+/* ===== ENTER KEY SUPPORT ===== */
+username.addEventListener("keydown", e => {
+  if (e.key === "Enter") startApp();
+});
+
+/* ===== NAV ===== */
+function goToIntro() {
+  welcome.style.display = "none";
+  intro.style.display = "flex";
+  setTimeout(()=>username.focus(),200);
+}
+
+/* ===== SOUND ===== */
+let audioUnlocked = false;
+let currentAudio = null;
+
+soundBtn.onclick = () => {
+  document.querySelectorAll("audio").forEach(a => {
+    a.play().then(()=>{a.pause();a.currentTime=0;});
+  });
+  audioUnlocked = true;
+  soundBtn.innerText = "🔊 Sound Enabled";
+};
+
+function playSound(emotion) {
+  if (!audioUnlocked) return;
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+  }
+  currentAudio = document.getElementById(emotion);
+  if (currentAudio) currentAudio.play();
+}
+
+/* ===== EMOTIONS ===== */
+const emotionUI = {
+  neutral:{title:"kuch khaas nahi 😌",caption:"jeevan waste hai mera 😌"},
+  happy:{title:"Mood bangya ji 😄",caption:"uska story pe reply aane ke baad mai ✨"},
+  sad:{title:"Dil bhar aaya 😢",caption:"thoda ro lene se halka ho jaata hai"},
+  angry:{title:"Gussa 😤",caption:"shaant ho ja boss"},
+  surprise:{title:"Shock 😲",caption:"ye kya ho gaya"},
+  fear:{title:"Darr 😨",caption:"sab theek hai"},
+  thinking:{title:"Thinking 🤔",caption:"dimaag full busy"},
+  idea:{title:"IDEA 💡",caption:"yeh kaam karega 🔥"}
+};
+
+/* ===== START APP ===== */
+function startApp() {
+  fetch("/start_camera");
+  intro.style.display = "none";
+  app.style.display = "flex";
+
+  headerText.innerText = `Welcome, Mr. ${username.value || "Gentleman"}`;
+  headerText.classList.add("reveal");
+}
+
+/* ===== EMOTION BUTTONS ===== */
+let autoMode = true;
+const btnContainer = document.getElementById("emotionButtons");
+
+Object.keys(emotionUI).forEach(e => {
+  const b = document.createElement("button");
+  b.innerText = e;
+  b.className = "emotion-btn";
+  b.onclick = () => {
+    autoMode = false;
+    document.querySelectorAll(".emotion-btn").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    updateUI(e);
+    playSound(e);
+  };
+  btnContainer.appendChild(b);
+});
+
+function enableAuto() {
+  autoMode = true;
+  document.querySelectorAll(".emotion-btn").forEach(x=>x.classList.remove("active"));
+}
+
+/* ===== UPDATE UI ===== */
+function updateUI(emotion) {
+  label.innerText = emotion;
+  memeImg.src = `/static/memes/${emotion}.gif?t=` + Date.now();
+  memeTitle.innerText = emotionUI[emotion].title;
+  memeFooter.innerText = emotionUI[emotion].caption;
+}
+
+/* ===== POLLING ===== */
+let lastEmotion = null;
+setInterval(()=>{
+  if (!autoMode) return;
+  fetch("/emotion?_="+Date.now())
+    .then(r=>r.json())
+    .then(d=>{
+      if (!d.emotion || d.emotion===lastEmotion) return;
+      lastEmotion = d.emotion;
+      updateUI(d.emotion);
+      playSound(d.emotion);
+    });
+},300);
+</script>
+
+</body>
+</html>
